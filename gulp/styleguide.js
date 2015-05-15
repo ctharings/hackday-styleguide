@@ -1,22 +1,26 @@
+'use strict';
+
 var gulp = require('gulp');
 var styledocco = require('gulp-styledocco');
-var replace = require('gulp-replace');
+var sass = require('gulp-sass');
 
 gulp.task('styledocco', function() {
-	gulp.src('build/**/*.scss')
+	gulp.src('./css/**/*.css')
 		.pipe(styledocco({
 			out: 'docs',
-			name: 'LEADPAGES STYLE GUIDE',
-			'no-minify': true,
-			preprocessor: '~/scss/sass',
-			include: ['css/style.css', 'js/functions.js']
+			name: 'LEADPAGES STYLE GUIDE'
 		}));
 });
 
-gulp.task('replace', function() {
-    gulp.src('bourbon/app/assets/stylesheets/**/*.scss')
-        .pipe(replace(/\/\/.*/g, ''))
-        .pipe(gulp.dest('build'));
-})
+gulp.task('sass', function () {
+    gulp.src('./scss/**/*.scss')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest('./css'));
+});
 
-gulp.task('build', ['replace','styledocco']);
+gulp.task('sass:watch', function () {
+    gulp.watch('./scss/**/*.scss', ['sass']);
+});
+
+
+gulp.task('build', ['sass','styledocco']);
