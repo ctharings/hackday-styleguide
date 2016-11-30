@@ -2,7 +2,6 @@
 
 module.exports = function(gulp) {
 
-    var gulp = require('gulp');
     var styledocco = require('gulp-styledocco');
     var sass = require('gulp-sass');
 
@@ -38,4 +37,4 @@ module.exports = function(gulp) {
 
     return gulp;
 
-}
+};
